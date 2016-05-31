@@ -40,11 +40,6 @@
                   <Insets bottom="2.0" left="2.0" right="2.0" top="40.0" />
                </VBox.margin>
             </Button>
-            <Button minWidth="-Infinity" mnemonicParsing="false" onAction="#onSave" text="Save">
-               <VBox.margin>
-                  <Insets bottom="2.0" left="2.0" right="2.0" top="40.0" />
-               </VBox.margin>
-            </Button>
          </children>
       </VBox>
    </children>

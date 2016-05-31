@@ -10,7 +10,7 @@ import java.io.FileNotFoundException;
 
 public class Main extends Application {
 
-    public static final String FILE_LOCATION= "/Users/jeffryporter/IdeaProjects/ContactsDesktop/src/sample/contacts.txt";
+    public static final String FILE_LOCATION= "contacts.txt";
 
     @Override
     public void start(Stage primaryStage) throws Exception{

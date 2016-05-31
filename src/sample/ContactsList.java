@@ -17,7 +17,7 @@ public class ContactsList
 {
     //declare variables
     private static ContactsList theContactsList;
-    private static ObservableList<Contact> contacts;
+    private static ArrayList<Contact> contacts = new ArrayList<>();
 
     //constructor
     private ContactsList()
