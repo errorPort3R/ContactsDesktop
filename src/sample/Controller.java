@@ -1,66 +1,102 @@
 package sample;
 
 import javafx.beans.InvalidationListener;
+import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionModel;
+import javafx.scene.control.TextField;
+import jodd.json.JsonParser;
+import jodd.json.JsonSerializer;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.net.URL;
 import java.util.*;
 
-public class Controller
+public class Controller implements Initializable
 {
 
     @FXML
-    ListView<String> nameList;
+    ListView contactList;
 
     @FXML
-    ListView<String> phoneList;
+    TextField name;
 
     @FXML
-    ListView<String> emailList;
+    TextField phone;
 
-    ContactsList theContactsList = ContactsList.getTheContactsList();
-    ObservableList<Contact> contacts;
+    @FXML
+    TextField email;
+
+    static ObservableList<Contact> contactsOL = FXCollections.observableArrayList();
 
     public void onAdd()
     {
-        int index = 0;
-        if (nameList.isFocused())
-        {
-            index = nameList.getEditingIndex();
-        }
-        else if (phoneList.isFocused())
-        {
-            index = phoneList.getEditingIndex();
-        }
-        else if (emailList.isFocused())
-        {
-            index = emailList.getEditingIndex();
-        }
-        else
-        {
-
-        }
-        theContactsList.addContact(new Contact(nameList.getItems().get(index), phoneList.getItems().get(index), emailList.getItems().get(index)), Main.FILE_LOCATION);
+        contactsOL.add(new Contact(name.getText(), phone.getText(), email.getText()));
+        saveContacts(contactsOL, Main.FILE_LOCATION);
+        contactList.refresh();
+        name.clear();
+        phone.clear();
+        email.clear();
     }
 
     public void onRemove()
     {
-
+        SelectionModel model = contactList.getSelectionModel();
+        Contact contact = (Contact)model.getSelectedItem();
+        contactsOL.remove(contact);
+        saveContacts(contactsOL, Main.FILE_LOCATION);
     }
 
-    public void populateOnLoad(ArrayList<Contact> contacts)
+    public static void loadContacts(String fileLoc)
     {
-        for (int i = 0;i<contacts.size();i++)
+        File f = new File(fileLoc);
+        try
         {
-            this.contacts.add(contacts(i));
-            nameList.setItems((String)this.contacts.get(i).getName());
-            phoneList.setItems(this.contacts.get(i).getPhoneNumber());
-            emailList.setItems(this.contacts.get(i).getEmail());
+            Scanner scanner = new Scanner(f);
+            scanner.useDelimiter("\\Z");
+            String contents = scanner.next();
+            JsonParser parser = new JsonParser();
+            Contact contact = parser.parse(contents, Contact.class);
+            System.out.println(contact);
+
+
+//            contactsOL.add(contact);
+//            contents = scanner.next();
+
         }
-        nameList.setItems(this.contacts.get().getName());
+        catch (FileNotFoundException e)
+        {
+
+        }
     }
 
+    public void saveContacts(ObservableList<Contact> contacts, String fileLoc)
+    {
+        JsonSerializer serializer = new JsonSerializer();
+        String json = serializer.include("*").serialize(contactsOL);
+        File f = new File(fileLoc);
+        try
+        {
+            FileWriter fw = new FileWriter(f);
+            fw.write(json);
+            fw.close();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources)
+    {
+        contactList.setItems(contactsOL);
+    }
 }

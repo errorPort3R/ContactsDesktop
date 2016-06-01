@@ -10,11 +10,12 @@ import java.io.FileNotFoundException;
 
 public class Main extends Application {
 
-    public static final String FILE_LOCATION= "contacts.txt";
+    public static final String FILE_LOCATION= "contacts.json";
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("contactsPage.fxml"));
+        Controller.loadContacts(FILE_LOCATION);
+        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         primaryStage.setTitle("Contacts Desktop");
         primaryStage.setScene(new Scene(root, 800, 600));
         primaryStage.show();
@@ -23,8 +24,6 @@ public class Main extends Application {
 
     public static void main(String[] args) throws FileNotFoundException
     {
-        ContactsList.loadContacts(FILE_LOCATION);
-        //ContactsList contactsList = ContactsList.getTheContactsList();
         launch(args);
     }
 }

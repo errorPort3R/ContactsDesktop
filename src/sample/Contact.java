@@ -5,16 +5,16 @@ package sample;
  */
 public class Contact
 {
-    private String name;
-    private String phoneNumber;
-    private String Email;
+    String name;
+    String phoneNumber;
+    String email;
 
     //constructor
     public Contact(String name, String phoneNumber, String email)
     {
         this.name = name;
         this.phoneNumber = phoneNumber;
-        Email = email;
+        this.email = email;
     }
 
     //methods
@@ -35,17 +35,18 @@ public class Contact
     }
 
     public String getEmail() {
-        return Email;
+        return email;
     }
 
     public void setEmail(String email) {
-        Email = email;
+        this.email = email;
     }
 
+
     @Override
-    public String toString() {
-        return name + ", " + phoneNumber +
-                ", " + Email;
+    public String toString()
+    {
+        return String.format("%-30s%-30s%-30s",name, phoneNumber, email);
     }
 
 
