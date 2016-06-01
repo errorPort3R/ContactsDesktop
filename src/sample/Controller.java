@@ -63,13 +63,12 @@ public class Controller implements Initializable
             scanner.useDelimiter("\\Z");
             String contents = scanner.next();
             JsonParser parser = new JsonParser();
-            Contact contact = parser.parse(contents, Contact.class);
-            System.out.println(contact);
-
-
-//            contactsOL.add(contact);
-//            contents = scanner.next();
-
+            ArrayList<HashMap<String, String>> contactsHash = parser.parse(contents);
+            for (HashMap h : contactsHash)
+            {
+                contactsOL.add(new Contact((String)h.get("name"), (String)h.get("phoneNumber"),(String)h.get("email")));
+            }
+            System.out.println();
         }
         catch (FileNotFoundException e)
         {
@@ -98,5 +97,6 @@ public class Controller implements Initializable
     public void initialize(URL location, ResourceBundle resources)
     {
         contactList.setItems(contactsOL);
+        contactList.refresh();
     }
 }

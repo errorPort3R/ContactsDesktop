@@ -46,7 +46,7 @@ public class Contact
     @Override
     public String toString()
     {
-        return String.format("%-30s%-30s%-30s",name, phoneNumber, email);
+        return String.format("%-50s%-50s%-50s",name, phoneNumber, email);
     }
 
 
