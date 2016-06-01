@@ -38,10 +38,13 @@ public class Controller implements Initializable
 
     public void onAdd()
     {
-        contactsOL.add(new Contact(name.getText(), phone.getText(), email.getText()));
-        Collections.sort(contactsOL);
-        saveContacts(contactsOL, Main.FILE_LOCATION);
-        contactList.refresh();
+        if (!name.getText().isEmpty() && !phone.getText().isEmpty() && !email.getText().isEmpty())
+        {
+            contactsOL.add(new Contact(name.getText(), phone.getText(), email.getText()));
+            Collections.sort(contactsOL);
+            saveContacts(contactsOL, Main.FILE_LOCATION);
+            contactList.refresh();
+        }
         name.clear();
         phone.clear();
         email.clear();
