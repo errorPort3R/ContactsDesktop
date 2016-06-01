@@ -1,9 +1,11 @@
 package sample;
 
+import java.util.Comparator;
+
 /**
  * Created by jeffryporter on 5/31/16.
  */
-public class Contact
+public class Contact implements Comparable<Contact>
 {
     String name;
     String phoneNumber;
@@ -49,5 +51,9 @@ public class Contact
         return String.format("%-50s%-50s%-50s",name, phoneNumber, email);
     }
 
-
+    @Override
+    public int compareTo(Contact o)
+    {
+        return this.getName().compareTo(o.getName());
+    }
 }

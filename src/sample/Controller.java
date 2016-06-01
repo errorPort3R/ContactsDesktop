@@ -39,6 +39,7 @@ public class Controller implements Initializable
     public void onAdd()
     {
         contactsOL.add(new Contact(name.getText(), phone.getText(), email.getText()));
+        Collections.sort(contactsOL);
         saveContacts(contactsOL, Main.FILE_LOCATION);
         contactList.refresh();
         name.clear();
@@ -69,6 +70,7 @@ public class Controller implements Initializable
                 contactsOL.add(new Contact((String)h.get("name"), (String)h.get("phoneNumber"),(String)h.get("email")));
             }
             System.out.println();
+            Collections.sort(contactsOL);
         }
         catch (FileNotFoundException e)
         {
